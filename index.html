@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>眠気覚ましビープ音</title>
+</head>
+<body>
+  <h1>眠気覚ましビープ音</h1>
+  <button id="beepBtn">ビープ音を鳴らす</button>
+  <audio id="beepSound" src="Flip_Clock01-01(Buzzer-50Hz).mp3"></audio>
+  <script>
+    document.getElementById('beepBtn').addEventListener('click', function() {
+      const sound = document.getElementById('beepSound');
+      sound.currentTime = 0;
+      sound.play();
+      alert('目を覚ませ！');
+    });
+  </script>
+</body>
+</html>
