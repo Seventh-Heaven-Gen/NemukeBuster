@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>NemukeBuster 無操作アラーム</title>
+</head>
+<body>
+  <h1>NemukeBuster - 無操作アラーム</h1>
+  <button id="resetBtn">リセットテスト（押してみて）</button>
+  <audio id="alarmSound" src="Flip_Clock01-01(Buzzer-50Hz).mp3"></audio>
+  <p id="timer"></p>
+  <script>
+    const alarmSound = document.getElementById('alarmSound');
+    const timerText = document.getElementById('timer');
+    let idleTimer = null;
+    let countdown = 10; // 秒数（10秒）
+
+    function resetIdleTimer() {
+      countdown = 10;
+      timerText.textContent = `アラームまで残り ${countdown} 秒`;
+      if (idleTimer) clearInterval(idleTimer);
+      idleTimer = setInterval(() => {
+        countdown--;
+        timerText.textContent = `アラームまで残り ${countdown} 秒`;
+        if (countdown <= 0) {
+          clearInterval(idleTimer);
+          alarmSound.currentTime = 0;
+          alarmSound.play();
+          alert('操作がありませんでした！目を覚まして！');
+          resetIdleTimer(); // アラーム後もリセット
+        }
+      }, 1000);
+    }
+
+    // ユーザーの操作でリセット
+    ['mousemove', 'keydown', 'touchstart', 'click'].forEach(event => {
+      window.addEventListener(event, resetIdleTimer);
+    });
+
+    // テスト用リセットボタン
+    document.getElementById('resetBtn').addEventListener('click', resetIdleTimer);
+
+    // 初回起動
+    resetIdleTimer();
+  </script>
+</body>
+</html>
